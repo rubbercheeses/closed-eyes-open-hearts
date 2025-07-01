@@ -68,6 +68,12 @@
 
   <div id="step1">
     <label for="numPlayers">Enter number of players:</label>
+    <label for="levelSelect">Select Game Level:</label>
+  <select id="levelSelect">
+    <option value="1">Level 1 - Perception</option>
+    <option value="2">Level 2 - Connection</option>
+    <option value="3">Level 3 - Reflection</option>
+  </select>
     <input type="number" id="numPlayers" min="1" max="10" placeholder="e.g., 2" />
     <button id="submitNumPlayers">Next</button>
   </div>
@@ -115,26 +121,28 @@
       }
     });
 
-    playerForm.addEventListener('submit', e => {
-      e.preventDefault();
+playerForm.addEventListener('submit', e => {
+  e.preventDefault();
 
-      // Collect all player names
-      const formData = new FormData(playerForm);
-      const players = [];
-      for (const [key, value] of formData.entries()) {
-        if (value.trim() === '') {
-          alert('Please fill in all player names.');
-          return;
-        }
-        players.push(value.trim());
-      }
+  const formData = new FormData(playerForm);
+  const players = [];
+  for (const [key, value] of formData.entries()) {
+    if (value.trim() === '') {
+      alert('Please fill in all player names.');
+      return;
+    }
+    players.push(value.trim());
+  }
 
-      // For now, just log players and alert, you can extend here
-      console.log('Players:', players);
-      alert('Players registered: ' + players.join(', '));
+  const level = document.getElementById('levelSelect').value;
 
-      // TODO: Redirect or start the game here
-    });
+  // Store players and level
+  localStorage.setItem('players', JSON.stringify(players));
+  localStorage.setItem('level', level);
+
+  // Redirect to game page
+  window.location.href = 'game.html';
+});
   </script>
 </body>
 </html>
