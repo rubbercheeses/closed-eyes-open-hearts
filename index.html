@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loading - Gaming Experience</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .loader {
+      border: 8px solid #333;
+      border-top: 8px solid #00ffcc;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-sentence {
+      color: #00ffcc;
+      font-size: 1rem;
+      max-width: 600px;
+      padding: 0 20px;
+      min-height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <div class="loading-sentence" id="loadingText">Loading...</div>
+
+  <script>
+    fetch('sentence.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('loadingText');
+
+        // Shuffle and pick 3 sentences
+        const shuffled = data.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 3);
+
+        let index = 0;
+        container.textContent = selected[index];
+
+        const interval = setInterval(() => {
+          index++;
+          if (index < selected.length) {
+            container.textContent = selected[index];
+          } else {
+            clearInterval(interval);
+            // Redirect to game setup page after last sentence
+            window.location.href = 'game-setup.html';
+          }
+        }, 2000);
+      })
+      .catch(error => {
+        console.error('Error loading sentences:', error);
+        document.getElementById('loadingText').textContent = 'Preparing immersive experience...';
+        setTimeout(() => window.location.href = 'game-setup.html', 4000);
+      });
+  </script>
+</body>
+</html>

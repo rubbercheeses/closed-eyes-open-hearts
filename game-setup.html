@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game Setup</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #00ffcc;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      width: 200px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #00ffcc;
+      color: #0d0d0d;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00ccaa;
+    }
+
+    .player-names {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Game Setup</h1>
+
+  <div id="step1">
+    <label for="numPlayers">Enter number of players:</label>
+    <input type="number" id="numPlayers" min="1" max="10" placeholder="e.g., 2" />
+    <button id="submitNumPlayers">Next</button>
+  </div>
+
+  <form id="playerForm" style="display:none;" class="player-names">
+    <div id="playerInputs"></div>
+    <button type="submit">Start Game</button>
+  </form>
+
+  <script>
+    const step1 = document.getElementById('step1');
+    const playerForm = document.getElementById('playerForm');
+    const playerInputs = document.getElementById('playerInputs');
+    const submitNumPlayers = document.getElementById('submitNumPlayers');
+
+    submitNumPlayers.addEventListener('click', () => {
+      const numPlayers = parseInt(document.getElementById('numPlayers').value);
+      if (isNaN(numPlayers) || numPlayers < 1 || numPlayers > 10) {
+        alert('Please enter a valid number of players between 1 and 10.');
+        return;
+      }
+
+      // Hide step1, show playerForm
+      step1.style.display = 'none';
+      playerForm.style.display = 'block';
+
+      // Clear previous inputs if any
+      playerInputs.innerHTML = '';
+
+      // Create input for each player's name
+      for (let i = 1; i <= numPlayers; i++) {
+        const label = document.createElement('label');
+        label.textContent = `Player ${i} Name:`;
+        label.setAttribute('for', `player${i}`);
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = `player${i}`;
+        input.name = `player${i}`;
+        input.placeholder = `Player ${i} Name`;
+        input.required = true;
+
+        playerInputs.appendChild(label);
+        playerInputs.appendChild(input);
+      }
+    });
+
+    playerForm.addEventListener('submit', e => {
+      e.preventDefault();
+
+      // Collect all player names
+      const formData = new FormData(playerForm);
+      const players = [];
+      for (const [key, value] of formData.entries()) {
+        if (value.trim() === '') {
+          alert('Please fill in all player names.');
+          return;
+        }
+        players.push(value.trim());
+      }
+
+      // For now, just log players and alert, you can extend here
+      console.log('Players:', players);
+      alert('Players registered: ' + players.join(', '));
+
+      // TODO: Redirect or start the game here
+    });
+  </script>
+</body>
+</html>
