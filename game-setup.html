@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -60,20 +61,20 @@
       width: 100%;
       max-width: 300px;
     }
-
   </style>
 </head>
+
 <body>
   <h1>Game Setup</h1>
 
   <div id="step1">
     <label for="numPlayers">Enter number of players:</label>
     <label for="levelSelect">Select Game Level:</label>
-  <select id="levelSelect">
-    <option value="1">Level 1 - Perception</option>
-    <option value="2">Level 2 - Connection</option>
-    <option value="3">Level 3 - Reflection</option>
-  </select>
+    <select id="levelSelect">
+      <option value="1">Level 1 - Perception</option>
+      <option value="2">Level 2 - Connection</option>
+      <option value="3">Level 3 - Reflection</option>
+    </select>
     <input type="number" id="numPlayers" min="1" max="10" placeholder="e.g., 2" />
     <button id="submitNumPlayers">Next</button>
   </div>
@@ -121,28 +122,29 @@
       }
     });
 
-playerForm.addEventListener('submit', e => {
-  e.preventDefault();
+    playerForm.addEventListener('submit', e => {
+      e.preventDefault();
 
-  const formData = new FormData(playerForm);
-  const players = [];
-  for (const [key, value] of formData.entries()) {
-    if (value.trim() === '') {
-      alert('Please fill in all player names.');
-      return;
-    }
-    players.push(value.trim());
-  }
+      const formData = new FormData(playerForm);
+      const players = [];
+      for (const [key, value] of formData.entries()) {
+        if (value.trim() === '') {
+          alert('Please fill in all player names.');
+          return;
+        }
+        players.push(value.trim());
+      }
 
-  const level = document.getElementById('levelSelect').value;
+      const level = document.getElementById('levelSelect').value;
 
-  // Store players and level
-  localStorage.setItem('players', JSON.stringify(players));
-  localStorage.setItem('level', level);
+      // Store players and level
+      localStorage.setItem('players', JSON.stringify(players));
+      localStorage.setItem('level', level);
 
-  // Redirect to game page
-  window.location.href = 'game.html';
-});
+      // Redirect to game page
+      window.location.href = 'game.html';
+    });
   </script>
 </body>
+
 </html>

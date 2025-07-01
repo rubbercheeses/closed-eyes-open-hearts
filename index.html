@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,8 +31,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     .loading-sentence {
@@ -43,6 +49,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="loader"></div>
   <div class="loading-sentence" id="loadingText">Loading...</div>
@@ -78,4 +85,5 @@
       });
   </script>
 </body>
+
 </html>
